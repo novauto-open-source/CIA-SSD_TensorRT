@@ -22,9 +22,9 @@ $ make -j8
 
 ```bash
 $ # run fp32 or fp16    edit config.xml, MODE 0 or 1 
-$ ./unit_test --onnx_path ../model/ciassd_float.onnx.onnx --data_path ../valid/
+$ ./unit_test --onnx_path ../model/ciassd_float.onnx.onnx --data_path ../validation_set/
 $ # run int8    edit config.xml, MODE 2
-$ ./unit_test --onnx_path ../model/ciassd_quant.onnx.onnx --data_path ../valid/
+$ ./unit_test --onnx_path ../model/ciassd_quant.onnx.onnx --data_path ../validation_set/
 ```
 Result will be saved in "NovaTrt/output/".
 
@@ -78,7 +78,7 @@ python3 eval_kitti.py --pre_path ../output/
 
 ## Contributors
 
-Hao Liu, Zhongyuan Qiu, Chenchen Zhang, Bo Wen. 
+Hao Liu, Zhongyuan Qiu, yifei chen, yali zhao. 
 
 [Novauto 超星未来](https://www.novauto.com.cn/)
 
