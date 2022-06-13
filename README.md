@@ -1,6 +1,6 @@
 # A TRT Inference Tool
 
-This repository is a tool for TensorRT inference.It is suited for xavier agx(jetpack4.6).
+This repository is a tool for TensorRT inference. It is suited for xavier agx(jetpack4.6). We provide two onnx models(CIASSD, float and integer) and kitti validation set. This repository also provides a precision eval tools based on python.
 
 
 ## Set LD_LIBRARY_PATH
@@ -74,6 +74,13 @@ Here are parameters in [config.xml](config.xml):
 ```bash
 python3 eval_kitti.py --pre_path ../output/
 ```
+## A reference result:
+
+|  | 3D AP_11(%) | 3D AP_40(%) | inference time(ms) |
+| :------: | :------: | :------: |:----:|
+| FP32 | 80.0 | 83.8 | 123.2 |
+| FP16 | 80.0 | 83.9 | 91.2 |
+| INT8 | 78.7 | 81.9 | 65.0 |
 
 
 ## Contributors
