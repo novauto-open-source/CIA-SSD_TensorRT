@@ -1,91 +1,64 @@
-# A TRT Inference Tool
+# NOVA-3D
 
-This repository is a tool for TensorRT inference. It is suited for xavier agx(jetpack4.6). We provide two onnx models(CIASSD, float and integer) and kitti validation set. This repository also provides a precision eval tools based on python.
+## Introduction
 
+NOVA-3D is the industry's first all-in-one optimization, acceleration and deployment tool that is specifically created for 3D point cloud algorithms. The self-developed solution by NOVAUTO features a complete point cloud operator library, a pruning and quantization tool, a reference model library and an inference acceleration library. NOVA-3D effectively solves the major pain point of 3D point cloud algorithms that are usually too complex for deployment on embedded systems while ensuring high performance and real-time inference of the models. The high level of automation of NOVA-3D greatly reduces project complexity and helps our customers to realize their AI solutions fast, at low costs and with unparalleled performance.
 
-## Set LD_LIBRARY_PATH
+The model library contains numerous state-of-the-art models (voxel-based, point-based, view-based, LiDAR-image, etc.) that can all be deployed in a unified manner on NVIDIA's embedded platforms such as Jetson Xavier or Jetson Orin.
+
+A great example for the effectiveness of NOVA-3D is the included state-of-the-art model CIA-SSD. To give you a first-hand impression, this repository provides everything necessary for the deployment of the NOVA-3D CIA-SSD model on your Jetson Xavier AGX platform (jetpack4.6) with evaluation on the KITTI dataset: We provide two optimized ONNX models (floating point and quantization), the required TensorRT inference tool and the KITTI evaluation code for seamless validation of the results.
+
+With NOVA-3D, our customers can realize their cutting-edge LiDAR perception solutions with accelerated deployment on NVIDIA's embedded platforms such as Jetson Xavier or Jetson Orin. If you are interested, please contact us.
+
+## Getting Started
+
+On your NVIDIA Jetson Xavier AGX (jetpack4.6), compile the program:
+
+```bash
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j8
+```
+
+Set up your LD_LIBRARY_PATH:
 
 ```bash
 $ export LD_LIBRARY_PATH=$(pwd)/nova3d_lib/:$LD_LIBRARY_PATH
 ```
 
-## Compile
+Set the mode in the [config.xml](config.xml) file and run the program:
 
 ```bash
-$ mkdir build
-$ cmake ..
-$ make -j8
+# fp32 or fp16:   set MODE=0(fp32) or MODE=1(fp16) 
+$ ./unit_test --onnx_path ../model/ciassd_float.onnx --data_path ../validation_set/
+# int8:           set MODE=2(int8)
+$ ./unit_test --onnx_path ../model/ciassd_quant.onnx --data_path ../validation_set/
 ```
 
-
-## Test
-
-```bash
-$ # run fp32 or fp16    edit config.xml, MODE 0 or 1 
-$ ./unit_test --onnx_path ../model/ciassd_float.onnx.onnx --data_path ../validation_set/
-$ # run int8    edit config.xml, MODE 2
-$ ./unit_test --onnx_path ../model/ciassd_quant.onnx.onnx --data_path ../validation_set/
-```
-Result will be saved in "NovaTrt/output/".
-
-
-NOTE:
-
-For the Kitti dataset, use the reduced bins to replicate our results.
-
-Here are parameters in [config.xml](config.xml):
-
-```model(test.xml)
-<?xml version="1.0"?>
-<opencv_storage>
-<MEAN type_id="opencv-matrix">   # image settings
-  <rows>3</rows>
-  <cols>1</cols>
-  <dt>f</dt>
-  <data>
-    4.85000014e-01 4.56000000e-01 4.05999988e-01</data></MEAN>
-<STD type_id="opencv-matrix">   # image settings
-  <rows>3</rows>
-  <cols>1</cols>
-  <dt>f</dt>
-  <data>
-    2.29000002e-01 2.24000007e-01 2.24999994e-01</data></STD>
-<IMAGESIZE type_id="opencv-matrix">   # image settings
-  <rows>2</rows>
-  <cols>1</cols>
-  <dt>i</dt>
-  <data>
-    1280 384</data></IMAGESIZE>
-<USE_MESN>0</USE_MESN>   # image settings
-<MODE>0</MODE>  #  inference mod, 0 for fp32, 1 for fp16, 2 for int8
-<SAVE_IMAGE>1</SAVE_IMAGE>  #  save output or not
-<CUDA_INDEX>0</CUDA_INDEX>  #  which cuda being used
-<ENGINE>""</ENGINE>   #   the location of engine file
-<OUTNODE>""</OUTNODE>   #   set the custom output for onnx model
-<FUSIONMODEL>0</FUSIONMODEL>  #  if use lidar and image fusion model
-<!-- "../engine/pointrcnn.trt" -->
-</opencv_storage>
-```
-
-## Evaluation
-
-[kitti_eval_tools](kitti_eval_tools) is a python program.
+Evaluate the results (requires python3):
 
 ```bash
 python3 eval_kitti.py --pre_path ../output/
 ```
-## A reference result:
 
-|  | 3D AP_11(%) | 3D AP_40(%) | inference time(ms) |
+
+## KITTI Results
+
+*NOVA-3D CIA-SSD on NVIDIA Jetson Xavier AGX:*
+
+|  | 3D AP_11 (%) | 3D AP_40 (%) | inference time (ms) |
 | :------: | :------: | :------: |:----:|
 | FP32 | 80.0 | 83.8 | 123.2 |
 | FP16 | 80.0 | 83.9 | 91.2 |
-| INT8 | 78.7 | 81.9 | 65.0 |
+| INT8 | 79.45 | 83.12 | 65.13 |
+
+To reproduce our results, use the provided KITTI validation set. The point cloud data is reduced to the area visible by the camera.
 
 
 ## Contributors
 
-Hao Liu, Zhongyuan Qiu, yifei chen, yali zhao. 
+Hao Liu, Zhongyuan Qiu, Yifei Chen, Yali Zhao
 
 [Novauto 超星未来](https://www.novauto.com.cn/)
 
