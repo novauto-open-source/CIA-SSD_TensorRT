@@ -68,3 +68,12 @@ Hao Liu, Zhongyuan Qiu, Yifei Chen, Yali Zhao
 ## License
 
 This project is licensed under the Apache license 2.0 License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgement
+
+The code is developed based on [TensorRT](https://github.com/NVIDIA/TensorRT).
+Thanks for previous works [CIA-SSD](https://github.com/Vegeta2020/CIA-SSD).
+
+## Contact
+
+If you have any question or suggestion about this repo, please contact us(zhongyuan.qiu@novauto.com.cn, hao.liu@novauto.com.cn, yifei.chen@novauto.com.cn).
