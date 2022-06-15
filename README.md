@@ -1,4 +1,4 @@
-# NOVA-3D
+# CIA-SSD deployed by NOVA-3D
 
 ## Introduction
 
@@ -6,13 +6,13 @@ NOVA-3D is the industry's first all-in-one optimization, acceleration and deploy
 
 The model library contains numerous state-of-the-art models (voxel-based, point-based, view-based, LiDAR-image, etc.) that can all be deployed in a unified manner on NVIDIA's embedded platforms such as Jetson Xavier or Jetson Orin.
 
-A great example for the effectiveness of NOVA-3D is the included state-of-the-art model CIA-SSD. To give you a first-hand impression, this repository provides everything necessary for the deployment of the NOVA-3D CIA-SSD model on your Jetson Xavier AGX platform (jetpack4.6) with evaluation on the KITTI dataset: We provide two optimized ONNX models (floating point and quantization), the required TensorRT inference tool and the KITTI evaluation code for seamless validation of the results.
+A great example for the effectiveness of NOVA-3D is the included state-of-the-art model CIA-SSD. To give you a first-hand impression, this repository provides everything necessary for the deployment of the NOVA-3D CIA-SSD model on your Jetson AGX Xavier platform (jetpack4.6) with evaluation on the KITTI dataset: We provide two optimized ONNX models (floating point and quantization), the required TensorRT inference tool and the KITTI evaluation code for seamless validation of the results.
 
 With NOVA-3D, our customers can realize their cutting-edge LiDAR perception solutions with accelerated deployment on NVIDIA's embedded platforms such as Jetson Xavier or Jetson Orin. If you are interested, please contact us.
 
 ## Getting Started
 
-On your NVIDIA Jetson Xavier AGX (jetpack4.6), compile the program:
+On your NVIDIA Jetson AGX Xavier(jetpack4.6), compile the program:
 
 ```bash
 $ mkdir build
@@ -45,7 +45,7 @@ python3 eval_kitti.py --pre_path ../output/
 
 ## KITTI Results
 
-*NOVA-3D CIA-SSD on NVIDIA Jetson Xavier AGX:*
+*NOVA-3D CIA-SSD on NVIDIA Jetson AGX Xavier:*
 
 |  | 3D AP_11 (%) | 3D AP_40 (%) | inference time (ms) |
 | :------: | :------: | :------: |:----:|
@@ -55,6 +55,13 @@ python3 eval_kitti.py --pre_path ../output/
 
 To reproduce our results, use the provided KITTI validation set. The point cloud data is reduced to the area visible by the camera.
 
+Besides, we also get the latency on *Jetson AGX ORIN:*
+
+|   | inference time (ms) |
+| :----: |:----:|
+| FP32 | 40.9 |
+| FP16 | 35.6 |
+| INT8 | 32.1 |
 
 ## Contributors
 
